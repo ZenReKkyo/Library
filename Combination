@@ -1,0 +1,27 @@
+
+int kj[300005], kji[300005];
+
+int modpow(int x, int n, int md) {
+	if (!n)return 1;
+	int res = modpow(x*x%md, n / 2, md);
+	if (n & 1)res = res*x%md;
+	return res;
+}
+int comb(int n, int r) {
+	if (n < 0 ||r<0|| n < r)return 0;
+	int ans = kj[n];
+	ans = ans*kji[r] % mod;
+	ans = ans*kji[n - r] % mod;
+	return ans%mod;
+}
+
+
+void kjinit(int n){
+	kj[0] = 1;
+	rep(i, n) {
+		kj[i + 1] = kj[i] * (i + 1);
+		kj[i + 1] %= mod;
+	}
+	rep(i, n)kji[i] = modpow(kj[i], mod - 2, mod);
+	
+}
