@@ -1,0 +1,24 @@
+typedef vector<vector<int>>mat;
+
+mat mul(mat &A, mat &B,int mod) {
+	mat C(A.size(), vector<int>(B[0].size()));
+	rep(i, A.size()) {
+		rep(k, B.size()) {
+			rep(j, B[0].size()) {
+				C[i][j] = (C[i][j] + A[i][k] * B[k][j]) % mod;
+			}
+		}
+	}
+	return C;
+}
+
+mat pow(mat A,int n,int mod) {
+	mat B(A.size(), vector<int>(A.size()));
+	rep(i, A.size())B[i][i] = 1;
+	while (n > 0) {
+		if (n & 1)B = mul(B, A,mod);
+		A = mul(A, A,mod);
+		n >>= 1;
+	}
+	return B;
+}
